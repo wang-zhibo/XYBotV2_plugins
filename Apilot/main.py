@@ -62,7 +62,6 @@ class Apilot(PluginBase):
 
         # 获取早报信息
         morning_news = await self.get_morning_news()
-        logger.info(f" morning_news: {morning_news}")
         if morning_news is None:
             return
         a, b, c = await bot.send_text_message(message["FromWxid"], morning_news)

@@ -1,0 +1,5 @@
+[Apilot]
+enable = true
+command = ["早报"]
+chatroom_list = ["47596113107@chatroom|耳语输入法官方交流②群", "47784883731@chatroom|aigc交流群7"]
+alapi_token = "UbC4h8DZwRKOfDeJ"

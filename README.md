@@ -26,3 +26,5 @@ curl --location 'http://127.0.0.1:5688/send_message' \
         }'
 
 ```
+
+##### Apilot 早报插件

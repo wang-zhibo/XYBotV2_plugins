@@ -78,6 +78,7 @@ class SendMsgApiServer(PluginBase):
         except (FileNotFoundError, json.JSONDecodeError) as e:
             logger.error(f"读取文件 {self.file_path} 出错: {e}")
 
+
     async def process_message(self, bot, data):
         """
         读取 data.json 中的一条数据并发送
@@ -89,6 +90,7 @@ class SendMsgApiServer(PluginBase):
             await self.send_message(bot, receiver_names, content, group_names)
         except Exception as e:
             logger.error(f"处理消息时发生异常: {e}")
+
 
     async def send_message(self, bot, receiver_names, content, group_names):
         """
@@ -112,6 +114,7 @@ class SendMsgApiServer(PluginBase):
             logger.error(f"发送消息时发生异常: {e}")
             raise e
 
+
     async def _send_hhhhh_message(self, bot: WechatAPIClient, receiver_names, content, group_names):
         """
         """
@@ -121,6 +124,7 @@ class SendMsgApiServer(PluginBase):
         else:
             # 否则发给好友
             await self._send_hhhhh_friend_message(bot, receiver_names, content)
+
 
     async def _send_hhhhh_group_message(self, bot: WechatAPIClient, receiver_names, content, group_names):
         # 读取本地缓存的群通讯录
@@ -199,8 +203,8 @@ class SendMsgApiServer(PluginBase):
 
         if not friend_infos:
             logger.info("未找到对应好友")
-            return
-        print("xxxx: ", friend_infos)
+            return 
+
         for friend_info in friend_infos:
             to_friend_id = friend_info.get("userName")
             nickName = friend_info.get("nickName")
@@ -278,7 +282,6 @@ class SendMsgApiServer(PluginBase):
         info_list_b = json.dumps(info_list, ensure_ascii=False)
 
         logger.info(f"通讯录: info_list count : {len(info_list)}, {type(info_list)}")
-        logger.info(f"通讯录: info_list : info_list: {info_list_b}")
 
         chatroom_list = []
         friend_list = []
@@ -330,7 +333,6 @@ class SendMsgApiServer(PluginBase):
         return
 
 
-
     @on_text_message
     async def handle_text(self, bot: WechatAPIClient, message: dict):
         
@@ -343,16 +345,12 @@ class SendMsgApiServer(PluginBase):
         if not len(command) or command[0] not in self.command:
             return
 
-
         sender_wxid = message["SenderWxid"]
-
         
         if sender_wxid not in self.admins:
             await bot.send_text_message(message["FromWxid"], "❌你配用这个指令吗？😡")
             return
-
         a, b, c = await bot.send_text_message(message["FromWxid"], "正在获取通讯录信息，请稍等...")
-
         await self.fetch_contacts_info(bot, message["FromWxid"])
 
 
@@ -375,4 +373,5 @@ class SendMsgApiServer(PluginBase):
         except Exception as e:
             logger.error(f"保存群聊列表时发生异常: {e}")
             raise
+
 

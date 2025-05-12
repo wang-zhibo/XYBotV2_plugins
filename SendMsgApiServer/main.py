@@ -57,10 +57,10 @@ class SendMsgApiServer(PluginBase):
             logger.error(log_msg)
         
 
-    @schedule('interval', seconds=6)
+    @schedule('interval', seconds=9)
     async def handle_message(self, bot: WechatAPIClient):
         """
-        每六秒 读取内容并发送消息
+        每九秒 读取内容并发送消息
         """
         try:
             with open(self.file_path, 'r', encoding='utf-8') as file:
@@ -185,6 +185,7 @@ class SendMsgApiServer(PluginBase):
                     final_content = f"{content}"
                     logger.info(f"手动发送微信群聊消息成功, 发送群聊:{chatroom_name}, 接收者:{ats}, 消息内容：{final_content}")
                     await bot.send_text_message(to_room_id, final_content)
+            await asyncio.sleep(0.9)
 
 
     async def _send_hhhhh_friend_message(self, bot: WechatAPIClient, receiver_names, content):
@@ -210,6 +211,7 @@ class SendMsgApiServer(PluginBase):
             nickName = friend_info.get("nickName")
             logger.info(f"手动发送微信消息成功, 发送人:{nickName} 消息内容：{content}")
             await bot.send_text_message(to_friend_id, content)
+            await asyncio.sleep(0.9)
 
 
     @schedule('cron', hour=5, minute=30, second=30)
@@ -218,7 +220,8 @@ class SendMsgApiServer(PluginBase):
         if not self.enable:
             return
         logger.info("定时任务测试, 我每天早上5点30分30秒执行")
-        await self.fetch_contacts_info(bot, self.admins[0])
+        if len(self.admins) > 0:
+            await self.fetch_contacts_info(bot, self.admins[0])
 
 
     async def fetch_contacts_info(self, bot, FromWxid):

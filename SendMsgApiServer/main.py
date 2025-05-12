@@ -220,8 +220,7 @@ class SendMsgApiServer(PluginBase):
         if not self.enable:
             return
         logger.info("定时任务测试, 我每天早上5点30分30秒执行")
-        if len(self.admins) > 0:
-            await self.fetch_contacts_info(bot, self.admins[0])
+        await self.fetch_contacts_info(bot, self.admins[0])
 
 
     async def fetch_contacts_info(self, bot, FromWxid):

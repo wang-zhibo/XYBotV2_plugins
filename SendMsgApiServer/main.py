@@ -108,7 +108,6 @@ class SendMsgApiServer(PluginBase):
 
         logger.info(f"receiver_names: {receiver_names}, content: {content}, group_names: {group_names}")
         try:
-            # 由于这是实例方法，我们需要从类的属性中获取 bot 实例
             await self._send_hhhhh_message(bot, receiver_names, content, group_names)
         except Exception as e:
             logger.error(f"发送消息时发生异常: {e}")

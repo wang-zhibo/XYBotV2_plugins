@@ -174,7 +174,8 @@ class SendMsgApiServer(PluginBase):
                 if len(receiver_names) > 0:
                     logger.info("艾特人消息")
                     if content_at and ats:
-                        final_content = f"{content_at} {content}"
+                        # final_content = f"{content_at} {content}"
+                        final_content = f"{content}\n{content_at}"
                         logger.info(f"手动发送微信群聊消息成功, 发送群聊:{chatroom_name}, 接收者:{ats}, 消息内容：{final_content}")
                         await bot.send_text_message(to_room_id, final_content, ats)
                     else:
